@@ -1,15 +1,11 @@
 <template>
-  <div id="app" class="container">
+<div>
+  <div id="app">
     <div class="heading">
       <h1 class="mt-3">Qmour</h1>
     </div>
     <div class="header-settings">
-    <b-nav-item-dropdown id="dropdown-right" right text="Right align" variant="primary" class="m-2">
-      <template slot="button-content">
-        <font-awesome-icon icon="ellipsis-v" />
-      </template>
-      <b-dropdown-item>Upload</b-dropdown-item>
-    </b-nav-item-dropdown>
+      <ejs-dropdownbutton :items="items" iconCss="e-icons e-menu" cssClass="e-caret-hide" class="upload-icon"></ejs-dropdownbutton>
     </div>
     <div id="nav">
       <router-link to="/">
@@ -24,6 +20,7 @@
     </div>
     <router-view />
   </div>
+</div>
 </template>
 
 <style>
@@ -35,81 +32,71 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 10px 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #fff;
 }
-
 #nav button {
-  background-color: #b6b6b6;
+  background-color: #b6b6b6 !important;
   border: 0px;
   border-radius: 9px;
   font-family: "Red Hat Display";
   font-style: normal;
   font-weight: bold;
 }
-
 #nav a.router-link-exact-active button {
-  border:0px;
-  background-color: #6271ff;
-   background: linear-gradient(267deg, #aaac29, #7f8be4, #ee6407);
-    background-size: 600% 600%;
-
-    -webkit-animation: btnAnimantion 3s ease infinite;
-    -moz-animation: btnAnimantion 3s ease infinite;
-    -o-animation: btnAnimantion 3s ease infinite;
-    animation: btnAnimantion 3s ease infinite;
-}
-@-webkit-keyframes btnAnimantion {
-    0%{background-position:0% 51%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
-}
-@-moz-keyframes btnAnimantion {
-    0%{background-position:0% 51%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
-}
-@-o-keyframes btnAnimantion {
-    0%{background-position:0% 51%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
-}
-@keyframes btnAnimantion {
-    0%{background-position:0% 51%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 51%}
+  border: 0px;
+  background-color: #6271ff !important;
 }
 </style>
+
 <style scoped>
+.upload-icon{
+  display:fixed;
+}
+.btn.focus,
+.btn:focus,
+.btn:hover {
+  outline: 0;
+  box-shadow: none !important;
+}
+.e-btn, .e-btn:hover, .e-btn:focus{
+  background:transparent;
+}
+
+#nav button {
+  background-color: #b6b6b6;
+  }
 .heading {
   width: 80%;
   position: relative;
   display: inline-block;
 }
-
 .header-settings {
   display: inline-block;
-  max-width: 20px;
-  cursor:pointer;
+  cursor: pointer;
 }
-
 .navlink {
-  margin-right: 9px;
+  margin-right: 8px;
 }
-
 @media (min-width: 492px) {
   #nav button {
     margin-right: 25px;
   }
 }
-
-@media (max-width: 445px) {
+@media (max-width: 359px){
+  .navlink{
+    font-size:10px !important;
+    margin-right:5px;
+  }
+  #nav{
+    margin-left:10px;
+  }
+}
+@media (max-width: 768px) {
   #nav {
     padding: 10px 0px;
   }
@@ -118,11 +105,32 @@
     padding: 5px 10px;
   }
 }
-
-@media (max-width: 310px) {
+@media (max-width: 318px) {
   #nav button {
     margin: auto;
     display: block;
   }
 }
+</style>
+<script>
+export default {
+  data () {
+    return {
+      items: [
+        {
+          text: 'Upload'
+        }
+      ]
+    }
+  }
+}
+</script>
+<style>
+  @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+  .e-menu::before {
+    content: '\e984';
+  }
 </style>
