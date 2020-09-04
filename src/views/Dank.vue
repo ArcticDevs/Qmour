@@ -3,7 +3,7 @@
 <!-- <div class="container"> -->
   <div class="container d-flex justify-content-center">
     <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-12">
-    <TrendingPosts class="trending-posts"
+    <TrendingPosts
     :posts="TrendingPosts"
      />
     </div>
