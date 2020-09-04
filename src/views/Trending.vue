@@ -1,22 +1,30 @@
 <template>
 
 <!-- <div class="container"> -->
-  <div class="container d-flex justify-content-center">
-    <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-12">
-    <TrendingPosts class="trending-posts"
+  <!-- <div class="container d-flex justify-content-center">
+    <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-12"> -->
+<div>
+    <TrendingPosts
     :posts="TrendingPosts"
      />
-    </div>
+  <!-- </div>
+    </div> -->
 <!-- </div> -->
 </div>
 
 </template>
 
 <script>
+// import { mdbContainer, mdbModal, mdbBtn, mdbModalBody, mdbModalFooter } from 'mdbvue'
 import { mapState } from 'vuex'
 import TrendingPosts from '../components/TrendingPosts.vue'
 export default {
-  name: 'Trending',
+  data () {
+    return {
+      push: false,
+      url: 'Hey check this out! https://dhananjaysoni.github.io'
+    }
+  },
   components: {
     TrendingPosts
   },
@@ -27,3 +35,51 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.mod-body{
+  cursor:pointer;
+}
+.modal-btn{
+  width:100px !important;
+  height:40px !important;
+}
+.card {
+  margin: 25px 25px;
+  border-radius: 20px;
+  box-shadow:0px 0px 15px rgb(99, 97, 97) !important;
+}
+.card-body{
+  padding-top:6px;
+  padding-bottom:0;
+}
+.card-img{
+  border-radius: 20px;
+}
+.card-text{
+  text-align:left;
+  padding-top:2vh;
+  margin-bottom: 2vh;
+}
+.card-header {
+  border: 0;
+  background-color: white;
+  border-radius: 15px 15px 0 0 !important;
+}
+.btn,
+.btn.focus,
+.btn:focus,
+.btn:hover {
+  outline: 0;
+  box-shadow: none !important;
+  width:10vw;
+  /* padding:0; */
+  /* height:30px; */
+/* padding:0 10px; */
+}
+@media (max-width:390px){
+  .btn{
+    padding:0;
+  }
+}
+</style>

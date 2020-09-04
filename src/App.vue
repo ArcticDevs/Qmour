@@ -1,5 +1,5 @@
 <template>
-<div>
+
   <div id="app">
     <div class="heading">
       <h1 class="mt-3">Qmour</h1>
@@ -19,9 +19,54 @@
       </router-link>
     </div>
     <router-view />
-  </div>
+<div v-if="api_details.length">
+  <TrendingPosts
+
+  v-for="(node, index) in api_details" :key="index"
+  :currentNode="api_details[index]"
+  :next="next"
+  />
 </div>
+  </div>
+
 </template>
+
+<script>
+import TrendingPosts from './components/TrendingPosts.vue'
+export default {
+  components: {
+    TrendingPosts
+  },
+  data () {
+    return {
+      items: [
+        {
+          text: 'Upload'
+        }
+      ],
+      api_details: [],
+      index: 0
+    }
+  },
+  methods: {
+    next () {
+      this.index++
+    }
+  },
+  mounted: function () {
+    fetch('https://www.instagram.com/yug_chandak/?__a=1', {
+      methods: 'get'
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((jsonData) => {
+        this.api_details = jsonData.graphql.user.edge_owner_to_timeline_media.edges
+      })
+  }
+}
+// console.log(this.api_details)
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap");
@@ -51,6 +96,14 @@
   border: 0px;
   background-color: #6271ff !important;
 }
+
+  @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+  @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+  .e-menu::before {
+    content: '\e984';
+  }
 </style>
 
 <style scoped>
@@ -111,26 +164,4 @@
     display: block;
   }
 }
-</style>
-<script>
-export default {
-  data () {
-    return {
-      items: [
-        {
-          text: 'Upload'
-        }
-      ]
-    }
-  }
-}
-</script>
-<style>
-  @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
-  @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
-  @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
-  @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
-  .e-menu::before {
-    content: '\e984';
-  }
 </style>
