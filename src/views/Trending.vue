@@ -3,9 +3,13 @@
 <!-- <div class="container"> -->
   <!-- <div class="container d-flex justify-content-center">
     <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-12"> -->
-<div>
+<div v-if="api_details">
     <TrendingPosts
     :posts="TrendingPosts"
+    v-for="(node, index) in api_details" :key="index"
+    :currentNode="api_details[index]"
+    :user="user"
+    :next="next"
      />
   <!-- </div>
     </div> -->
@@ -22,7 +26,7 @@ export default {
   data () {
     return {
       push: false,
-      url: 'Hey check this out! https://dhananjaysoni.github.io'
+      url: 'https://dhananjaysoni.github.io'
     }
   },
   components: {

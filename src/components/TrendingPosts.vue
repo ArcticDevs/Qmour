@@ -21,21 +21,29 @@
   </mdb-container>
   </div>
     <div class="container d-flex justify-content-center">
-    <div class="col-xl-6 col-lg-6 col-md-10 col-sm-10 col-12">
+    <div class="col-xl-6 col-lg-6 col-md-10 col-sm-10 col-xs-12">
+
         <b-card class="card" img-alt="Card image" img-top>
+          <!-- <div class="row">
+        <div class="col-4"> -->
             <!-- <template v-slot:abc>{{currentNode.node.display_url}}</template> -->
-          <b-card-header class="card-header">{{ currentNode.node.owner.username }}</b-card-header>
+            <b-img left :src="user.profile_pic_url_hd" alt="Left image" style="height:45px ;border-radius:50px"></b-img>
+        <!-- </div>
+        <div class="col-8"> -->
+          <b-card-header class="card-header"><label>{{ currentNode.node.owner.username }}</label></b-card-header>
+        <!-- </div>
+        </div> -->
           <hr class="mb-1 mt-0">
           <b-card-img :src="currentNode.node.display_url"></b-card-img>
           <!-- <hr class="mt-1"> -->
           <b-card-body>
               <!-- <template v-slot:lead>{{  }}</template> -->
-          <b-card-text>{{  }}</b-card-text>
+          <!-- <b-card-text>{{  }}</b-card-text> -->
           <hr class="mb-1 mt-0">
           <div class="d-flex justify-content-around">
             <button class="btn btn-primary" href="#"><font-awesome-icon icon="heart" /></button>
             <button class="btn btn-primary" href="#" @click="push = true"><font-awesome-icon icon="share" /></button>
-            <button class="btn btn-primary" href="#"><font-awesome-icon icon="download" /></button>
+            <button class="btn btn-primary" @click="downloadImage()"><font-awesome-icon icon="download" /></button>
           </div>
           <!-- <hr class="mb-1 mt-0"> -->
           </b-card-body>
@@ -55,15 +63,17 @@ import {
   Email
 } from 'vue-socialmedia-share'
 import { mdbContainer, mdbModal, mdbBtn, mdbModalBody, mdbModalFooter } from 'mdbvue'
+import axios from 'axios'
 export default {
   data () {
     return {
       push: false,
-      url: 'Hey check this out! https://dhananjaysoni.github.io'
+      url: this.currentNode.node.display_url
     }
   },
   props: {
     currentNode: Object,
+    user: Object,
     next: Function
     // posts: Array
   },
@@ -81,14 +91,22 @@ export default {
     WhatsApp,
     Email
   },
-  watch: {
-    currentNode: {
-    //   immediate: true
-    //   handler(){
-    //     this.selectedIndex=null
-    //     this.answered=false
-    //     this.shuffleAnswers( )
-    //   }
+  methods: {
+    downloadImage () {
+      axios({
+        url: this.currentNode.node.display_url,
+        method: 'GET',
+        responseType: 'blob'
+      }).then((response) => {
+        var fileUrl = window.URL.createObjectURL(new Blob([response.data]))
+        var fileLink = document.createElement('a')
+        fileLink.href = fileUrl
+
+        fileLink.setAttribute('download', 'image.jpg')
+        document.body.appendChild(fileLink)
+
+        fileLink.click()
+      })
     }
   }
 }
@@ -103,7 +121,7 @@ export default {
   height:40px !important;
 }
 .card {
-  margin: 25px 25px;
+  margin: 25px 0px;
   border-radius: 20px;
   box-shadow:0px 0px 15px rgb(99, 97, 97) !important;
 }
@@ -123,6 +141,8 @@ export default {
   border: 0;
   background-color: white;
   border-radius: 15px 15px 0 0 !important;
+  text-align: justify;
+  margin-left: 30px;
 }
 .btn,
 .btn.focus,

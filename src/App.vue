@@ -24,6 +24,7 @@
 
   v-for="(node, index) in api_details" :key="index"
   :currentNode="api_details[index]"
+  :user="user"
   :next="next"
   />
 </div>
@@ -45,7 +46,9 @@ export default {
         }
       ],
       api_details: [],
-      index: 0
+      user: {},
+      index: 0,
+      accounts: ['yug_chandak', 'instagram','selenagomez']
     }
   },
   methods: {
@@ -54,15 +57,19 @@ export default {
     }
   },
   mounted: function () {
-    fetch('https://www.instagram.com/yug_chandak/?__a=1', {
+    this.accounts.forEach(element => {
+      fetch('https://www.instagram.com/'+element+'/?__a=1', {
       methods: 'get'
     })
       .then(response => {
         return response.json()
       })
       .then((jsonData) => {
-        this.api_details = jsonData.graphql.user.edge_owner_to_timeline_media.edges
+        jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(element => {
+          this.api_details.push(element);
+        });
       })
+    });
   }
 }
 // console.log(this.api_details)
