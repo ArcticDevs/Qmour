@@ -26,16 +26,40 @@ export default {
   data () {
     return {
       push: false,
-      url: 'https://dhananjaysoni.github.io'
+      url: 'https://dhananjaysoni.github.io',
+      api_details: [],
+      user: {},
+      index: 0,
+      accounts: ['yug_chandak', 'instagram','selenagomez']
     }
   },
   components: {
     TrendingPosts
+  // },
+  // computed: {
+  //   ...mapState([
+  //     'TrendingPosts'
+  //   ])
   },
-  computed: {
-    ...mapState([
-      'TrendingPosts'
-    ])
+  methods: {
+    next () {
+      this.index++
+    }
+  },
+  mounted: function () {
+    this.accounts.forEach(element => {
+      fetch('https://www.instagram.com/'+element+'/?__a=1', {
+      methods: 'get'
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((jsonData) => {
+        jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(element => {
+          this.api_details.push(element);
+        });
+      })
+    });
   }
 }
 </script>

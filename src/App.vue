@@ -19,15 +19,12 @@
       </router-link>
     </div>
     <router-view />
-<div v-if="api_details.length">
+<!-- <div v-if="api_details.length"> -->
   <TrendingPosts
 
-  v-for="(node, index) in api_details" :key="index"
-  :currentNode="api_details[index]"
-  :user="user"
-  :next="next"
+
   />
-</div>
+<!-- </div> -->
   </div>
 
 </template>
@@ -45,33 +42,12 @@ export default {
           text: 'Upload'
         }
       ],
-      api_details: [],
-      user: {},
-      index: 0,
-      accounts: ['yug_chandak', 'instagram','selenagomez']
+      
     }
   },
-  methods: {
-    next () {
-      this.index++
-    }
-  },
-  mounted: function () {
-    this.accounts.forEach(element => {
-      fetch('https://www.instagram.com/'+element+'/?__a=1', {
-      methods: 'get'
-    })
-      .then(response => {
-        return response.json()
-      })
-      .then((jsonData) => {
-        jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(element => {
-          this.api_details.push(element);
-        });
-      })
-    });
-  }
-}
+  
+
+}// this.user = {...jsonData.graphql.user}
 // console.log(this.api_details)
 </script>
 
