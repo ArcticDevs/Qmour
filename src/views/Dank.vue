@@ -35,11 +35,6 @@ export default {
   },
   components: {
     DankPosts
-  // },
-  // computed: {
-  //   ...mapState([
-  //     'TrendingPosts'
-  //   ])
   },
   methods: {
     next () {

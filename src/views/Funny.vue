@@ -35,11 +35,6 @@ export default {
   },
   components: {
     FunnyPosts
-  // },
-  // computed: {
-  //   ...mapState([
-  //     'TrendingPosts'
-  //   ])
   },
   methods: {
     next () {

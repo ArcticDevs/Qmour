@@ -30,7 +30,7 @@
             <b-img left :src="user.profile_pic_url_hd" alt="Profile" style="height:45px ;border-radius:50px"></b-img>
         <!-- </div>
         <div class="col-8"> -->
-          <b-card-header class="card-header"><label>{{ currentNode.node.owner.username }}</label></b-card-header>
+          <b-card-header ><label>{{ currentNode.node.owner.username }}</label></b-card-header>
 <div class="header-settings">
       <!-- <ejs-dropdownbutton :items="items" iconCss="e-icons e-M_Properties" style=".e-M_Properties::before{content:'\e679';}" class="upload-icon"></ejs-dropdownbutton> -->
     </div>
@@ -158,7 +158,7 @@ export default {
   background-color: white;
   border-radius: 15px 15px 0 0 !important;
   text-align: justify;
-  margin-left: 30px;
+  padding-left:0;
   width:70%;
   display:inline-block;
 }

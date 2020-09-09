@@ -158,7 +158,7 @@ export default {
   background-color: white;
   border-radius: 15px 15px 0 0 !important;
   text-align: justify;
-  margin-left: 30px;
+  padding-left:0;
   width:70%;
   display:inline-block;
 }
