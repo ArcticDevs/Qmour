@@ -1,16 +1,26 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default{
+  
   state: {
+    dark_mode: false
+  },
 
+  getters: {
+    get_mode(state) {
+			return state.dark_mode;
+		},
   },
-  mutations: {
-  },
+
   actions: {
+    toggle_mode(context) {
+      context.commit("mode");
+    }
   },
-  modules: {
+
+  mutations: {
+
+    mode(state,data) {
+        return state.dark_mode = !state.dark_mode;
+    },
+
   }
-})
+}

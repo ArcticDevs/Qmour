@@ -1,87 +1,149 @@
 <template>
+  <div v-if="api_details">
+    <section v-for="(node,index) in pageOffset" :key="index">
+      <div v-if="api_details[index]">
+        <TrendingPosts
+          :key="index"
+          :currentNode="api_details[index]"
+          :user="user"
+          :next="next"
+          
+        />
+      </div>
+    </section>
 
-<!-- <div class="container"> -->
-  <!-- <div class="container d-flex justify-content-center">
-    <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-12"> -->
-<div v-if="api_details">
-    <TrendingPosts
-    :posts="TrendingPosts"
-    v-for="(node, index) in api_details" :key="index"
-    :currentNode="api_details[index]"
-    :user="user"
-    :next="next"
-     />
-  <!-- </div>
-    </div> -->
-<!-- </div> -->
-</div>
-
+    <footer>
+      <div ref="infiniteScrollTrigger" id="scroll-trigger"></div>
+      <div class="circle-loader" v-if="showLoader"></div>
+    </footer>
+  </div>
 </template>
 
 <script>
-// import { mdbContainer, mdbModal, mdbBtn, mdbModalBody, mdbModalFooter } from 'mdbvue'
-import { mapState } from 'vuex'
-import TrendingPosts from '../components/TrendingPosts.vue'
+import { mapState } from "vuex";
+import TrendingPosts from "../components/TrendingPosts.vue";
 export default {
-  data () {
+ 
+  data() {
     return {
-      push: false,
-      url: 'https://dhananjaysoni.github.io',
+      currentPage:0,
+      maxPerPage:10,
+      totalResults:100,
+      showLoader:true,
       api_details: [],
+      currentNode: {},
       user: {},
       index: 0,
-      accounts: ['yug_chandak', 'instagram','selenagomez']
+      accounts: ["yug_chandak","instagram"],
+    };
+  },
+  computed: {
+    pageCount(){
+      return Math.ceil(this.totalResults/this.maxPerPage);
+    },
+    pageOffset(){
+      return this.maxPerPage * this.currentPage;
     }
   },
   components: {
-    TrendingPosts
+    TrendingPosts,
   },
   methods: {
-    next () {
-      this.index++
+    next() {
+      this.index++;
+    },
+    // Download Image Method
+    downloadImage() {
+      axios({
+        url: this.currentNode.node.display_url,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        var fileUrl = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileUrl;
+
+        fileLink.setAttribute("download", "image.jpg");
+        document.body.appendChild(fileLink);
+
+        fileLink.click();
+      });
+    },
+    // Infinite Scroll Method
+    scrollTrigger() {
+      const observer= new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.intersectionRatio > 0 && this.currentPage < this.pageCount){
+            this.showLoader = true;
+            setTimeout(()=>{
+              this.currentPage += 1;
+              this.showLoader = false;
+            }, 1000);
+          }
+        });
+      });
+      observer.observe(this.$refs.infiniteScrollTrigger);
     }
   },
   mounted: function () {
-    this.accounts.forEach(element => {
-      fetch('https://www.instagram.com/'+element+'/?__a=1', {
-      methods: 'get'
-    })
-      .then(response => {
-        return response.json()
+    this.accounts.forEach((element) => {
+      fetch("https://www.instagram.com/" + element + "/?__a=1", {
+        methods: "get",
       })
-      .then((jsonData) => {
-        jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(element => {
-          this.api_details.push(element);
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((jsonData) => {
+          //       this.user = Object.keys(jsonData.graphql.user).map((key) => {
+          //    return jsonData.graphql.user[key]
+          //  })
+          // console.log(jsonData)
+          // if(jsonData.length){
+          jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(
+            (element) => {
+              // console.log(element)
+              this.api_details.push(element);
+            }
+          );
+          // }
+        })
+        .catch((err) => {
+          // Do something for an error here
+          console.log("Error Reading data " + err);
         });
-      })
     });
-  }
-}
+
+// scroll tirigger for infinite load
+    this.scrollTrigger();
+
+  },
+};
 </script>
 
 <style scoped>
-.mod-body{
-  cursor:pointer;
+.mod-body {
+  cursor: pointer;
 }
-.modal-btn{
-  width:100px !important;
-  height:40px !important;
+.modal-btn {
+  width: 100px !important;
+  height: 40px !important;
 }
 .card {
   margin: 25px 25px;
   border-radius: 20px;
-  box-shadow:0px 0px 15px rgb(99, 97, 97) !important;
+  box-shadow: 0px 0px 15px rgb(99, 97, 97) !important;
 }
-.card-body{
-  padding-top:6px;
-  padding-bottom:0;
+.card-body {
+  padding-top: 6px;
+  padding-bottom: 0;
 }
-.card-img{
+.card-img {
   border-radius: 20px;
 }
-.card-text{
-  text-align:left;
-  padding-top:2vh;
+.card-text {
+  text-align: left;
+  padding-top: 2vh;
   margin-bottom: 2vh;
 }
 .card-header {
@@ -95,14 +157,42 @@ export default {
 .btn:hover {
   outline: 0;
   box-shadow: none !important;
-  width:10vw;
+  width: 10vw;
   /* padding:0; */
   /* height:30px; */
-/* padding:0 10px; */
+  /* padding:0 10px; */
 }
-@media (max-width:390px){
-  .btn{
-    padding:0;
+@media (max-width: 390px) {
+  .btn {
+    padding: 0;
+  }
+}
+footer{
+  position:relative;
+  width:100%;
+  height:80px;
+}
+footer #scroll-trigger{
+  height: 40px;
+}
+.circle-loader{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+  border: 5px solid rgba(22, 22, 22, 0.2);
+  border-top:5px solid #fff;
+  animation:animate 1.5s infinite linear;
+}
+@keyframes animate{
+  0%{
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 </style>
