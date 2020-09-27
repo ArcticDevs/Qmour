@@ -176,18 +176,13 @@ export default {
   height: 40px !important;
 }
 .card {
-
+  padding:0 16px 16px;
   border-radius: 20px;
-  box-shadow: 0px 0px 15px rgb(99, 97, 97) !important;
+  box-shadow: 0px 0px 10px rgb(99, 97, 97) !important;
 }
 .dark-card {
   color:white;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(121, 121, 121, 1) 100%
-  );
+  background: rgba(45, 45, 45, 0.94);
 
 }
 .dark-card .card-header{

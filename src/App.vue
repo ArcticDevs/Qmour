@@ -8,7 +8,7 @@
       </div>
 
       <div class="heading">
-        <h1 class="mt-3">Qmour</h1>
+        <h1>Qmour</h1>
       </div>
 
       <!-- <div class="header-settings">
@@ -124,7 +124,14 @@ export default {
 </style>
 
 <style scoped>
-
+h1 {
+ font: 900 40px/1 'Red Hat Display', Arial, sans-serif; 
+ 
+ 
+ text-align: center; 
+ /* letter-spacing: -3px;  */
+ 
+}
 .e-btn,
 .e-btn:hover,
 .e-btn:focus {
@@ -137,7 +144,7 @@ export default {
   background-color: #b6b6b6;
 }
 .heading {
-  width: 70%;
+  width: 80%;
   position: relative;
   display: inline-block;
 }
