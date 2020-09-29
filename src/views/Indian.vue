@@ -2,7 +2,7 @@
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <FunnyPosts
+        <Indian
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import FunnyPosts from "../components/FunnyPosts.vue";
+import Indian from "../components/Indian.vue";
 export default {
  
   data() {
@@ -34,7 +34,7 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      accounts: ["zucctheberg","desi.sarcasm","lumpysauce","mightyfinememe","laughsflix","chill_aatma","streqms","dopememerhere","meme_thesis","memes_you.need","thesloppypanda"],
+      accounts: ["fakinghumour","sarcastic.family","siraa_posts","crazynesss__overloaded","bombay_60_","memesbyengineer","fooking_citch","hasley.baba","vibe_withsakshi",'twittasm',"memeindiacompany","tdv_insta,backbenchers_7","vikascasm","be.like.bro.family","sarcaster.memes","fakeadco","raavansays"],
     };
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    FunnyPosts,
+    Indian,
   },
   methods: {
     next() {

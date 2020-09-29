@@ -1,18 +1,26 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import TrendingPosts from '../data/TrendingPosts'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default{
+  
   state: {
-    TrendingPosts,
-    posts: [...TrendingPosts]
+    dark_mode: false
   },
-  mutations: {
+
+  getters: {
+    get_mode(state) {
+			return state.dark_mode;
+		},
   },
+
   actions: {
+    toggle_mode(context) {
+      context.commit("mode");
+    }
   },
-  modules: {
+
+  mutations: {
+
+    mode(state,data) {
+        return state.dark_mode = !state.dark_mode;
+    },
+
   }
-})
+}
