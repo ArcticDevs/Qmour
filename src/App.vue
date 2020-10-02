@@ -1,6 +1,7 @@
 <template>
 <div id="sticky">
   <div id="app">
+     <go-top :has-outline="false"	visibleoffset="10" ></go-top>
     <div class="flex">
       <div class="mode-toggle" @click="modeToggle" :class="darkDark">
         <div class="toggle">
@@ -22,7 +23,7 @@
       </div> -->
     </div>
     <div id="nav">
-      <carousel :nav="false" :dots="false"  >
+      <carousel :nav="false" :dots="false" :margin="-80" >
       <router-link to="/Indian">
         <button class="btn btn-primary mb-2 navlink">Indian &#x1F1EE;&#x1F1F3; </button>
       </router-link>
@@ -30,7 +31,7 @@
         <button class="btn btn-primary mb-2 navlink">Dark &#128420</button>
       </router-link>
       <router-link to="/funny-memes">
-        <button class="btn btn-primary mb-2 navlink">Funny Memes &#128514;</button>
+        <button class="btn btn-primary mb-2 navlink">Funny  &#128514;</button>
       </router-link> 
       <router-link to="/science-memes">
         <button class="btn btn-primary mb-2 navlink">Science ⚕️ </button>
@@ -55,11 +56,13 @@
 <script>
 import Indian from "./components/Indian.vue";
 import carousel from 'vue-owl-carousel'
-
+import GoTop from '@inotom/vue-go-top';
 export default {
+  
   components: {
     Indian,
-    carousel
+    carousel,
+    GoTop
   },
 
   data() {

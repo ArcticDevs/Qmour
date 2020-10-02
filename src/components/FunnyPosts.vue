@@ -138,6 +138,9 @@ export default {
         fileLink.click();
       });
     },
+     track () {
+      this.$ga.page('/funny-memes')
+    },
   },
   props: {
     currentNode: Object,
@@ -213,7 +216,7 @@ export default {
   border: 0;
   background-color: transparent;
   border-radius: 15px 15px 0 0 !important;
-  text-align: center;
+  text-align: left;
   padding: auto;
   display: inline-block;
   font-size: 110%;

@@ -3,7 +3,11 @@ import 'mdbvue/lib/css/mdb.min.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import VueAnalytics from 'vue-analytics'
 
+Vue.use(VueAnalytics, {
+  id: 'UA-179395921-1'
+})
 import Vuex from 'vuex'
 Vue.use(Vuex)
 import storeData from './store/index'
