@@ -3,11 +3,41 @@ import 'mdbvue/lib/css/mdb.min.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+// import VueRouter from 'vue-router'
 import VueAnalytics from 'vue-analytics'
 
-Vue.use(VueAnalytics, {
-  id: 'UA-179395921-1'
-})
+// Vue.use(VueAnalytics, {
+//   id: 'UA-179395921-1',
+//   checkDuplicatedScript: true,
+//   routes :[
+//     {
+//        path: '*', redirect: '/Indian' 
+//     },
+//     {
+//       path: '/Indian',
+      
+//     },
+//     {
+//       path: '/dank-memes',
+      
+//     },
+//     {
+//       path: '/funny-memes',
+    
+//     },
+//     {
+//       path:'/science-memes',
+//     }
+//   ],
+//   autoTracking: {
+//     screenview: true
+//   },
+// })
+
+
+
+
+
 import Vuex from 'vuex'
 Vue.use(Vuex)
 import storeData from './store/index'
@@ -27,9 +57,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEllipsisV, faHeart, faShare, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import vuetify from './plugins/vuetify';
+// import vuetify from './plugins/vuetify';
 
-import Vuetify from 'vuetify/lib'
+// import Vuetify from 'vuetify/lib'
 
 import VueDarkMode from "@growthbunker/vuedarkmode";
 
@@ -46,7 +76,7 @@ Vue.use(DropDownButtonPlugin)
 
 Vue.config.productionTip = false
 
-Vue.use(Vuetify)
+
 
 Vue.use(VueDarkMode, {
   // Specify the theme to use: dark or light (dark by default).
@@ -66,12 +96,6 @@ Vue.use(VueDarkMode, {
 new Vue({
   router,
   store,
-  vuetify,
   render: h => h(App)
 }).$mount('#app')
 
-export default new Vuetify({
-  theme: {
-    dark: true,
-  },
-})

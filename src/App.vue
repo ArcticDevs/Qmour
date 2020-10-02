@@ -1,7 +1,7 @@
 <template>
 <div id="sticky">
   <div id="app">
-     <go-top :has-outline="false"	visibleoffset="10" ></go-top>
+     <go-top :has-outline="false"	visibleoffset="10"></go-top>
     <div class="flex">
       <div class="mode-toggle" @click="modeToggle" :class="darkDark">
         <div class="toggle">
