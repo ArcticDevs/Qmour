@@ -2,7 +2,7 @@
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <Indian
+        <IndianPosts
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import Indian from "../components/Indian.vue";
+import IndianPosts from "../components/IndianPosts.vue";
 export default {
  
   data() {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    Indian,
+    IndianPosts,
   },
   methods: {
     next() {
@@ -91,22 +91,15 @@ export default {
         methods: "get",
       })
         .then((response) => {
-          console.log(response);
           return response.json();
         })
         .then((jsonData) => {
-          //       this.user = Object.keys(jsonData.graphql.user).map((key) => {
-          //    return jsonData.graphql.user[key]
-          //  })
-          // console.log(jsonData)
-          // if(jsonData.length){
+
           jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(
             (element) => {
-              // console.log(element)
               this.api_details.push(element);
             }
           );
-          // }
         })
         .catch((err) => {
           // Do something for an error here
@@ -158,9 +151,6 @@ export default {
   outline: 0;
   box-shadow: none !important;
   width: 10vw;
-  /* padding:0; */
-  /* height:30px; */
-  /* padding:0 10px; */
 }
 @media (max-width: 390px) {
   .btn {

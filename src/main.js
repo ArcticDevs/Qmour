@@ -3,39 +3,7 @@ import 'mdbvue/lib/css/mdb.min.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-// import VueRouter from 'vue-router'
-import VueAnalytics from 'vue-analytics'
-
-// Vue.use(VueAnalytics, {
-//   id: 'UA-179395921-1',
-//   checkDuplicatedScript: true,
-//   routes :[
-//     {
-//        path: '*', redirect: '/Indian' 
-//     },
-//     {
-//       path: '/Indian',
-      
-//     },
-//     {
-//       path: '/dank-memes',
-      
-//     },
-//     {
-//       path: '/funny-memes',
-    
-//     },
-//     {
-//       path:'/science-memes',
-//     }
-//   ],
-//   autoTracking: {
-//     screenview: true
-//   },
-// })
-
-
-
+// import VueAnalytics from 'vue-analytics'
 
 
 import Vuex from 'vuex'
@@ -45,7 +13,9 @@ import storeData from './store/index'
 const store = new Vuex.Store(
   storeData
 )
-
+global.jQuery = require('jquery');
+var $ = global.jQuery;
+window.$ = $;
 import { DropDownButtonPlugin } from '@syncfusion/ej2-vue-splitbuttons'
 import { enableRipple } from '@syncfusion/ej2-base'
 
@@ -57,9 +27,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEllipsisV, faHeart, faShare, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import vuetify from './plugins/vuetify';
 
-// import Vuetify from 'vuetify/lib'
 
 import VueDarkMode from "@growthbunker/vuedarkmode";
 

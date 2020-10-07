@@ -146,8 +146,6 @@ export default {
     currentNode: Object,
     user: Object,
     next: Function,
-
-    // posts: Array
   },
   name: "FunnyPosts",
   components: {
@@ -197,6 +195,7 @@ export default {
 .dark-card .card-header{
     color:white !important;
 }
+.dark-card #ejs-btn,
 .dark-card #ejs-btn:focus,
 .dark-card #ejs-btn:hover{
   color:white !important;

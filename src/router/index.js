@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Indian from '../views/Indian.vue'
-import Dank from '../views/Dank.vue'
-import Funny from '../views/Funny.vue'  
+
 
 Vue.use(VueRouter)
 
@@ -16,9 +14,9 @@ const routes = [
     component: () => import(/*webpackChunkName: "trending"*/ "../views/Indian.vue")
   },
   {
-    path: '/dank-memes',
-    name: 'Dank',
-    component: () => import(/*webpackChunkName: "dank"*/ "../views/Dank.vue")
+    path: '/dark-memes',
+    name: 'Dark',
+    component: () => import(/*webpackChunkName: "dank"*/ "../views/Dark.vue")
   },
   {
     path: '/funny-memes',
