@@ -1,6 +1,6 @@
 <template>
   <div id="header" >
-    <go-top :has-outline="false" visibleoffset="10"></go-top>
+    <go-top id="goto-top" :has-outline="false" visibleoffset="10"></go-top>
     <div class="flex">
       <div class="mode-toggle" @click="modeToggle" :class="darkDark">
         <div class="toggle">
@@ -121,7 +121,9 @@ export default {
 </style>
 
 <style scoped>
-
+#goto-top{
+  background-color: #83DEC4 !important;
+}
 .dark{
       color:white;
   background: rgba(45, 45, 45, 0.94);

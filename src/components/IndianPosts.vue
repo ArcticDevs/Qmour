@@ -10,7 +10,7 @@
           <h4>Share</h4>
         </div>
         <mdb-modal-body class="mod-body">
-          <facebook :url="url" scale="3" class="mr-4"></facebook>
+          <facebook :url="url" scale="3" class="mr-4" ></facebook>
           <twitter
             :url="url"
             title="Check me on Github"
@@ -63,25 +63,24 @@
           <b-card-body>
             <hr class="mb-1 mt-0" />
             <div class="d-flex justify-content-around">
-              <!-- <button class="btn btn-primary" href="#" @click="push = true">
-                <font-awesome-icon icon="share" />
-              </button> -->
               <div class="wrapper">
-                <a href="javascript:void(0);" class="share-button" @click="push = true">
-                  <i class="material-icons ">share</i>
+                <a
+                  href="javascript:void(0);"
+                  class="share-button"
+                  @click="push = true"
+                >
+                  <i class="material-icons">share</i>
                   <span class="share-overlay"></span>
                 </a>
               </div>
-              <!-- <button class="btn btn-primary" @click="downloadImage()">
-                <font-awesome-icon icon="download" />
-              </button> -->
-              <div class="container">
+
+ 
                 <a href="" class="button dark-single" @click="downloadImage()">
                   <div>
                     <svg viewBox="0 0 24 24"></svg>
                   </div>
                 </a>
-              </div>
+              
 
               <div class="wrapper">
                 <a href="javascript:void(0);" class="like-button">
@@ -98,8 +97,8 @@
   </div>
 </template>
 <script>
-//  import jQuery from 'jQuery'
-
+import {gsap, Elastic} from "gsap";
+import axios from "axios";
 import {
   Facebook,
   Twitter,
@@ -115,7 +114,6 @@ import {
   mdbModalBody,
   mdbModalFooter,
 } from "mdbvue";
-import axios from "axios";
 export default {
   data() {
     return {
@@ -137,93 +135,101 @@ export default {
       $(this).toggleClass("is-active");
     });
 
-document.querySelectorAll('.button').forEach(button => {
-
-    let duration = 1000,
-        svg = button.querySelector('svg'),
-        svgPath = new Proxy({
+    document.querySelectorAll(".button").forEach((button) => {
+      let duration = 1000,
+        svg = button.querySelector("svg"),
+        svgPath = new Proxy(
+          {
             y: null,
-            smoothing: null
-        }, {
+            smoothing: null,
+          },
+          {
             set(target, key, value) {
-                target[key] = value;
-                if(target.y !== null && target.smoothing !== null) {
-                    svg.innerHTML = getPath(target.y, target.smoothing, null);
-                }
-                return true;
+              target[key] = value;
+              if (target.y !== null && target.smoothing !== null) {
+                svg.innerHTML = getPath(target.y, target.smoothing, null);
+              }
+              return true;
             },
             get(target, key) {
-                return target[key];
-            }
-        });
+              return target[key];
+            },
+          }
+        );
 
-    button.style.setProperty('--duration', duration);
+      button.style.setProperty("--duration", duration);
 
-    svgPath.y = 20;
-    svgPath.smoothing = 0;
+      svgPath.y = 20;
+      svgPath.smoothing = 0;
 
-    button.addEventListener('click', e => {
-        
+      button.addEventListener("click", (e) => {
         e.preventDefault();
 
-        if(!button.classList.contains('loading')) {
+        if (!button.classList.contains("loading")) {
+          button.classList.add("loading");
 
-            button.classList.add('loading');
+          gsap.to(svgPath, {
+            smoothing: 0.3,
+            duration: (duration * 0.065) / 1000,
+          });
 
-            gsap.to(svgPath, {
-                smoothing: .3,
-                duration: duration * .065 / 1000
-            });
+          gsap.to(svgPath, {
+            y: 12,
+            duration: (duration * 0.265) / 1000,
+            delay: (duration * 0.065) / 1000,
+            ease: Elastic.easeOut.config(1.12, 0.4),
+          });
 
-            gsap.to(svgPath, {
-                y: 12,
-                duration: duration * .265 / 1000,
-                delay: duration * .065 / 1000,
-                ease: Elastic.easeOut.config(1.12, .4)
-            });
-
-            setTimeout(() => {
-                svg.innerHTML = getPath(0, 0, [
-                    [3, 14],
-                    [8, 19],
-                    [21, 6]
-                ]);
-            }, duration / 2);
-
+          setTimeout(() => {
+            svg.innerHTML = getPath(0, 0, [
+              [3, 14],
+              [8, 19],
+              [21, 6],
+            ]);
+          }, duration / 2);
         }
-
+      });
     });
 
-});
-
-function getPoint(point, i, a, smoothing) {
-    let cp = (current, previous, next, reverse) => {
-            let p = previous || current,
-                n = next || current,
-                o = {
-                    length: Math.sqrt(Math.pow(n[0] - p[0], 2) + Math.pow(n[1] - p[1], 2)),
-                    angle: Math.atan2(n[1] - p[1], n[0] - p[0])
-                },
-                angle = o.angle + (reverse ? Math.PI : 0),
-                length = o.length * smoothing;
-            return [current[0] + Math.cos(angle) * length, current[1] + Math.sin(angle) * length];
+    function getPoint(point, i, a, smoothing) {
+      let cp = (current, previous, next, reverse) => {
+          let p = previous || current,
+            n = next || current,
+            o = {
+              length: Math.sqrt(
+                Math.pow(n[0] - p[0], 2) + Math.pow(n[1] - p[1], 2)
+              ),
+              angle: Math.atan2(n[1] - p[1], n[0] - p[0]),
+            },
+            angle = o.angle + (reverse ? Math.PI : 0),
+            length = o.length * smoothing;
+          return [
+            current[0] + Math.cos(angle) * length,
+            current[1] + Math.sin(angle) * length,
+          ];
         },
         cps = cp(a[i - 1], a[i - 2], point, false),
         cpe = cp(point, a[i - 1], a[i + 1], true);
-    return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
-}
+      return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
+    }
 
-function getPath(update, smoothing, pointsNew) {
-    let points = pointsNew ? pointsNew : [
-            [4, 12],
-            [12, update],
-            [20, 12]
-        ],
-        d = points.reduce((acc, point, i, a) => i === 0 ? `M ${point[0]},${point[1]}` : `${acc} ${getPoint(point, i, a, smoothing)}`, '');
-    return `<path d="${d}" />`;
-}
-
-
+    function getPath(update, smoothing, pointsNew) {
+      let points = pointsNew
+          ? pointsNew
+          : [
+              [4, 12],
+              [12, update],
+              [20, 12],
+            ],
+        d = points.reduce(
+          (acc, point, i, a) =>
+            i === 0
+              ? `M ${point[0]},${point[1]}`
+              : `${acc} ${getPoint(point, i, a, smoothing)}`,
+          ""
+        );
+      return `<path d="${d}" />`;
+    }
   },
   computed: {
     pageCount() {
@@ -279,11 +285,17 @@ function getPath(update, smoothing, pointsNew) {
   },
 };
 </script>
+
+
 <style>
+/* ********************Menu icon*************** */
 .e-settings::before {
   content: "\e984";
 }
 </style>
+
+
+
 <style scoped>
 .mod-body {
   cursor: pointer;
@@ -392,6 +404,12 @@ function getPath(update, smoothing, pointsNew) {
   text-decoration: none;
   overflow: hidden;
 }
+@media (max-width:450px){
+  .wrapper .like-button{
+    width: 40px;
+    height: 40px;
+  }
+}
 .wrapper .share-button {
   position: relative;
   width: 50px;
@@ -407,6 +425,12 @@ function getPath(update, smoothing, pointsNew) {
   margin: 0 auto;
   text-decoration: none;
   overflow: hidden;
+}
+@media (max-width:450px){
+  .wrapper .share-button{
+    width: 40px;
+    height: 40px;
+  }
 }
 .wrapper .like-button .like-overlay {
   display: block;
@@ -504,15 +528,11 @@ function getPath(update, smoothing, pointsNew) {
   animation-fill-mode: both;
 }
 
-
-
-
 /* **********************Download Button**************** */
 .button.dark-single {
   --background: none;
   --rectangle: #cccccc;
-  --success: #4BC793;
-
+  --success: #4bc793;
 }
 
 .button {
@@ -522,23 +542,24 @@ function getPath(update, smoothing, pointsNew) {
   --text: rgb(0, 0, 0);
   --arrow: #fff;
   --checkmark: #fff;
-  --shadow: rgba(10, 22, 50, .24);
+  --shadow: rgba(10, 22, 50, 0.24);
   display: -webkit-box;
   display: flex;
   overflow: hidden;
   text-decoration: none;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   background: var(--background);
-  border-radius: 35px;
+  border-radius: 50%;
   box-shadow: 0 2px 8px -1px var(--shadow);
-  -webkit-transition: box-shadow .2s ease, -webkit-transform .2s ease;
-  transition: box-shadow .2s ease, -webkit-transform .2s ease;
-  transition: transform .2s ease, box-shadow .2s ease;
-  transition: transform .2s ease, box-shadow .2s ease, -webkit-transform .2s ease;
+  -webkit-transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
+  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    -webkit-transform 0.2s ease;
 }
 .button:active {
   -webkit-transform: scale(0.95);
-          transform: scale(0.95);
+  transform: scale(0.95);
   box-shadow: 0 1px 4px -1px var(--shadow);
 }
 .button > div {
@@ -547,8 +568,15 @@ function getPath(update, smoothing, pointsNew) {
   height: 50px;
   background: var(--rectangle);
 }
-.button > div:before, .button > div:after {
-  content: '';
+@media (max-width:450px){
+  .button > div{
+    width: 40px;
+    height: 40px;
+  }
+}
+.button > div:before,
+.button > div:after {
+  content: "";
   display: block;
   position: absolute;
 }
@@ -565,13 +593,13 @@ function getPath(update, smoothing, pointsNew) {
   width: 60px;
   height: 60px;
   -webkit-transform-origin: 50% 0;
-          transform-origin: 50% 0;
+  transform-origin: 50% 0;
   border-radius: 0 0 80% 80%;
   background: var(--success);
   top: 0;
   left: 0;
   -webkit-transform: scaleY(0);
-          transform: scaleY(0);
+  transform: scaleY(0);
 }
 .button > div svg {
   display: block;
@@ -588,96 +616,99 @@ function getPath(update, smoothing, pointsNew) {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.button.loading ul {
-  -webkit-animation: text calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
-          animation: text calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
-}
+
 .button.loading > div:before {
-  -webkit-animation: line calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
-          animation: line calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+  -webkit-animation: line calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
+  animation: line calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
 }
 .button.loading > div:after {
-  -webkit-animation: background calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
-          animation: background calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+  -webkit-animation: background calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
+  animation: background calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
 }
 .button.loading > div svg {
-  -webkit-animation: svg calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
-          animation: svg calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+  -webkit-animation: svg calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
+  animation: svg calc(var(--duration) * 1ms) linear forwards
+    calc(var(--duration) * 0.065ms);
 }
 
 @-webkit-keyframes text {
   10%,
-    85% {
+  85% {
     -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
+    transform: translateY(-100%);
   }
   95%,
-    100% {
+  100% {
     -webkit-transform: translateY(-200%);
-            transform: translateY(-200%);
+    transform: translateY(-200%);
   }
 }
 
 @keyframes text {
   10%,
-    85% {
+  85% {
     -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
+    transform: translateY(-100%);
   }
   95%,
-    100% {
+  100% {
     -webkit-transform: translateY(-200%);
-            transform: translateY(-200%);
+    transform: translateY(-200%);
   }
 }
 @-webkit-keyframes line {
   5%,
-    10% {
+  10% {
     -webkit-transform: translateY(-30px);
-            transform: translateY(-30px);
+    transform: translateY(-30px);
   }
   40% {
     -webkit-transform: translateY(-20px);
-            transform: translateY(-20px);
+    transform: translateY(-20px);
   }
   65% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
   75%,
-    100% {
+  100% {
     -webkit-transform: translateY(30px);
-            transform: translateY(30px);
+    transform: translateY(30px);
   }
 }
 @keyframes line {
   5%,
-    10% {
+  10% {
     -webkit-transform: translateY(-30px);
-            transform: translateY(-30px);
+    transform: translateY(-30px);
   }
   40% {
     -webkit-transform: translateY(-20px);
-            transform: translateY(-20px);
+    transform: translateY(-20px);
   }
   65% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
   75%,
-    100% {
+  100% {
     -webkit-transform: translateY(30px);
-            transform: translateY(30px);
+    transform: translateY(30px);
   }
 }
 @-webkit-keyframes svg {
   0%,
-    20% {
+  20% {
     stroke-dasharray: 0;
     stroke-dashoffset: 0;
   }
   21%,
-    89% {
+  89% {
     stroke-dasharray: 20px;
     stroke-dashoffset: 26px;
     stroke-width: 3px;
@@ -694,22 +725,22 @@ function getPath(update, smoothing, pointsNew) {
     opacity: 1;
   }
   20%,
-    89% {
+  89% {
     opacity: 0;
   }
   90%,
-    100% {
+  100% {
     opacity: 1;
   }
 }
 @keyframes svg {
   0%,
-    20% {
+  20% {
     stroke-dasharray: 0;
     stroke-dashoffset: 0;
   }
   21%,
-    89% {
+  89% {
     stroke-dasharray: 20px;
     stroke-dashoffset: 26px;
     stroke-width: 3px;
@@ -726,66 +757,66 @@ function getPath(update, smoothing, pointsNew) {
     opacity: 1;
   }
   20%,
-    89% {
+  89% {
     opacity: 0;
   }
   90%,
-    100% {
+  100% {
     opacity: 1;
   }
 }
 @-webkit-keyframes background {
   10% {
     -webkit-transform: scaleY(0);
-            transform: scaleY(0);
+    transform: scaleY(0);
   }
   40% {
     -webkit-transform: scaleY(0.15);
-            transform: scaleY(0.15);
+    transform: scaleY(0.15);
   }
   65% {
     -webkit-transform: scaleY(0.5);
-            transform: scaleY(0.5);
+    transform: scaleY(0.5);
     border-radius: 0 0 50% 50%;
   }
   75% {
     border-radius: 0 0 50% 50%;
   }
   90%,
-    100% {
+  100% {
     border-radius: 0;
   }
   75%,
-    100% {
+  100% {
     -webkit-transform: scaleY(1);
-            transform: scaleY(1);
+    transform: scaleY(1);
   }
 }
 @keyframes background {
   10% {
     -webkit-transform: scaleY(0);
-            transform: scaleY(0);
+    transform: scaleY(0);
   }
   40% {
     -webkit-transform: scaleY(0.15);
-            transform: scaleY(0.15);
+    transform: scaleY(0.15);
   }
   65% {
     -webkit-transform: scaleY(0.5);
-            transform: scaleY(0.5);
+    transform: scaleY(0.5);
     border-radius: 0 0 50% 50%;
   }
   75% {
     border-radius: 0 0 50% 50%;
   }
   90%,
-    100% {
+  100% {
     border-radius: 0;
   }
   75%,
-    100% {
+  100% {
     -webkit-transform: scaleY(1);
-            transform: scaleY(1);
+    transform: scaleY(1);
   }
 }
 .container {
@@ -793,14 +824,10 @@ function getPath(update, smoothing, pointsNew) {
   display: flex;
   flex-wrap: wrap;
   -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .container > div {
   flex-basis: 100%;
   width: 0;
 }
-
-
-
-
 </style>

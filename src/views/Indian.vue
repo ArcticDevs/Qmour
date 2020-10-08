@@ -34,7 +34,7 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      accounts: ["fakinghumour","sarcastic.family","siraa_posts","crazynesss__overloaded","bombay_60_","memesbyengineer","fooking_citch","hasley.baba","vibe_withsakshi",'twittasm',"memeindiacompany","tdv_insta,backbenchers_7","vikascasm","be.like.bro.family","sarcaster.memes","fakeadco","raavansays"],
+      accounts: ["fakinghumour","sarcastic.family","siraa_posts","crazynesss__overloaded","bombay_60_","memesbyengineer","fooking_citch","hasley.baba","vibe_withsakshi",'twittasm',"memeindiacompany","tdv_insta","backbenchers_7","vikascasm","be.like.bro.family","sarcaster.memes","fakeadco","raavansays"],
     };
   },
   computed: {
