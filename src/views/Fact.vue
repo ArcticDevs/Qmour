@@ -35,9 +35,9 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      category: "Science",
-      accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"],
-    };
+      category: "Facts",
+      accounts: ["factbeam", "facts.jpg_", "motion.to.facts", "factskart", "pro.facts", "busted_minds_official", "facts.desire", "factsdroid", "factsden", "fact_to_know_official", "facts4magic", "facttoxic", "the_allfacts", "thevirtualfact_", "f4facts", "thexoticfacts", "dazingfacts", "factologys", "factshade", "beautyremediesofficial", "factburn"]
+        };
   },
 
   components: {

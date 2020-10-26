@@ -1,5 +1,4 @@
 <template>
-
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
@@ -35,15 +34,10 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      category: "Science",
-      accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"],
-    };
+      category: "sarcasm",
+      accounts: ["sarcastic.family", "siraa_posts", "crazynesss__overloaded", "bombay_60_", "fooking_citch", "memesbyengineer", "vibe_withsakshi", "twittasm", "tdv_insta", "backbenchers_7", "be.like.bro.family", "sarcaster.memes", "vikascasm", "raavansays", "fakeadco", "fakinghumour", "memeindiacompany", "hasley.baba", "crazyylog"]
+       };
   },
-
-  components: {
-    Posts,
-  },
-
   computed: {
     pageCount(){
       return Math.ceil(this.totalResults/this.maxPerPage);
@@ -52,7 +46,9 @@ export default {
       return this.maxPerPage * this.currentPage;
     }
   },
-  
+  components: {
+    Posts,
+  },
   methods: {
     next() {
       this.index++;
@@ -90,7 +86,6 @@ export default {
       observer.observe(this.$refs.infiniteScrollTrigger);
     }
   },
-
   mounted: function () {
     this.accounts.forEach((element) => {
       fetch("https://www.instagram.com/" + element + "/?__a=1", {
@@ -118,9 +113,6 @@ export default {
   },
 };
 </script>
-
-
-
 
 <style scoped>
 .mod-body {

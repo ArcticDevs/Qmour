@@ -1,13 +1,15 @@
 <template>
+ <!-- accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"], -->
+
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <SciencePosts
+        <Posts
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
           :next="next"
-          
+          :category="category"
         />
       </div>
     </section>
@@ -21,7 +23,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SciencePosts from "../components/SciencePosts.vue";
+import Posts from "../components/Posts.vue";
 export default {
  
   data() {
@@ -34,9 +36,15 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
+      category: "Science",
       accounts: ["memeaboutscience","memesonscience","sciencefunn","iitian_memes","memes.of.science_","daily_sciencememes","science_humor","jee__memes"],
     };
   },
+
+  components: {
+    Posts,
+  },
+
   computed: {
     pageCount(){
       return Math.ceil(this.totalResults/this.maxPerPage);
@@ -45,9 +53,7 @@ export default {
       return this.maxPerPage * this.currentPage;
     }
   },
-  components: {
-    SciencePosts,
-  },
+  
   methods: {
     next() {
       this.index++;
@@ -85,6 +91,7 @@ export default {
       observer.observe(this.$refs.infiniteScrollTrigger);
     }
   },
+
   mounted: function () {
     this.accounts.forEach((element) => {
       fetch("https://www.instagram.com/" + element + "/?__a=1", {
@@ -112,6 +119,9 @@ export default {
   },
 };
 </script>
+
+
+
 
 <style scoped>
 .mod-body {

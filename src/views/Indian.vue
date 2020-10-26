@@ -2,12 +2,12 @@
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <IndianPosts
+        <Posts
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
           :next="next"
-          
+          :category="category"
         />
       </div>
     </section>
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import IndianPosts from "../components/IndianPosts.vue";
+import Posts from "../components/Posts.vue";
 export default {
  
   data() {
@@ -34,8 +34,9 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      accounts: ["fakinghumour","sarcastic.family","siraa_posts","crazynesss__overloaded","bombay_60_","memesbyengineer","fooking_citch","hasley.baba","vibe_withsakshi",'twittasm',"memeindiacompany","tdv_insta","backbenchers_7","vikascasm","be.like.bro.family","sarcaster.memes","fakeadco","raavansays"],
-    };
+      category: "Indian",
+      accounts:["sarcastic.family", "siraa_posts", "crazynesss__overloaded", "bombay_60_", "fooking_citch", "memesbyengineer", "vibe_withsakshi", "twittasm", "tdv_insta", "backbenchers_7", "be.like.bro.family", "sarcaster.memes", "vikascasm", "raavansays", "fakeadco", "fakinghumour", "memeindiacompany", "hasley.baba", "crazyylog"]
+      };
   },
   computed: {
     pageCount(){
@@ -46,7 +47,7 @@ export default {
     }
   },
   components: {
-    IndianPosts,
+    Posts,
   },
   methods: {
     next() {

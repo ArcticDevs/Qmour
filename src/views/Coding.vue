@@ -35,9 +35,9 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      category: "Science",
-      accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"],
-    };
+      category: "Coding",
+      accounts:["meme_coding", "belayact", "sarcasticwindow", "commoncreed", "comicalcoder", "computerimpulse", "hpythonn", "life.ofacoder", "_codehub_", "techgang_", "madeforgeeks", "coding.area.51", "codepals", "programmermemes__", "dancode_js", "wittiminuts", "insynouttech", "computerimpulse", "programmerjokesofficial"]
+       };
   },
 
   components: {

@@ -1,5 +1,4 @@
 <template>
-
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
@@ -35,15 +34,10 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      category: "Science",
-      accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"],
-    };
+      category: "Quotes",
+      accounts:["21.79am", "Alonefeeling.s", "world_in_darknesss", "world_in_darknesss", "selfloveblossom", "pretty_liex", "thequotesoriginals", "poison.__.king", "thesquashedstories", "lawofattractionlive", "arspoetica.us", "mazelogue", "heart_criex", "lorelei.poetry", "unsaidfeelings.abhi", "wordsfrom.soul_", "blakeaudenpoetry", "the.ace__", "beingsheblog", "oceanabled", "theinsidefeelings", "wordporm"] 
+      };
   },
-
-  components: {
-    Posts,
-  },
-
   computed: {
     pageCount(){
       return Math.ceil(this.totalResults/this.maxPerPage);
@@ -52,7 +46,9 @@ export default {
       return this.maxPerPage * this.currentPage;
     }
   },
-  
+  components: {
+    Posts,
+  },
   methods: {
     next() {
       this.index++;
@@ -90,7 +86,6 @@ export default {
       observer.observe(this.$refs.infiniteScrollTrigger);
     }
   },
-
   mounted: function () {
     this.accounts.forEach((element) => {
       fetch("https://www.instagram.com/" + element + "/?__a=1", {
@@ -100,6 +95,7 @@ export default {
           return response.json();
         })
         .then((jsonData) => {
+
           jsonData.graphql.user.edge_owner_to_timeline_media.edges.forEach(
             (element) => {
               this.api_details.push(element);
@@ -118,9 +114,6 @@ export default {
   },
 };
 </script>
-
-
-
 
 <style scoped>
 .mod-body {

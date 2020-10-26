@@ -291,6 +291,7 @@ export default {
 /* ********************Menu icon*************** */
 .e-settings::before {
   content: "\e984";
+  
 }
 </style>
 

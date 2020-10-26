@@ -2,12 +2,12 @@
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <FunnyPosts
+        <Posts
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
           :next="next"
-          
+          :category="category"
         />
       </div>
     </section>
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import FunnyPosts from "../components/FunnyPosts.vue";
+import Posts from "../components/Posts.vue";
 export default {
  
   data() {
@@ -34,7 +34,8 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
-      accounts: ["zucctheberg","desi.sarcasm","lumpysauce","mightyfinememe","laughsflix","chill_aatma","streqms","dopememerhere","meme_thesis","memes_you.need","thesloppypanda"],
+      category: "Funny",
+      accounts: ["zucctheberg","desi.sarcasm","lumpysauce","mightyfinememe","laughsflix","chill_aatma","dopememerhere","meme_thesis","memes_you.need","thesloppypanda"],
     };
   },
   computed: {
@@ -46,7 +47,7 @@ export default {
     }
   },
   components: {
-    FunnyPosts,
+    Posts,
   },
   methods: {
     next() {

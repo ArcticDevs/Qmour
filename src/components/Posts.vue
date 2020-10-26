@@ -1,16 +1,17 @@
 <template>
-  <div v-if="currentNode" id="Indian">
+  <div :id="category">
+    <div id="body" v-if="currentNode" :class="{'dark-bg': darkMode }">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
     <div id="modal">
-      <mdb-modal :show="push" @close="push = false">
+      <mdb-modal :show="push" @close="push = false" >
         <div class="mt-3">
           <h4>Share</h4>
         </div>
         <mdb-modal-body class="mod-body">
-          <facebook :url="url" scale="3" class="mr-4"></facebook>
+          <facebook :url="url" scale="3" class="mr-4" ></facebook>
           <twitter
             :url="url"
             title="Check me on Github"
@@ -56,13 +57,13 @@
               id="ejs-btn"
             ></ejs-dropdownbutton>
           </b-card-header>
-          <div class="header-settings"></div>
 
           <hr class="mb-1 mt-0" />
-          <b-card-img :src="currentNode.node.display_url"></b-card-img>
+          <b-card-img id="card-img" :src="currentNode.node.display_url"></b-card-img>
           <b-card-body>
             <hr class="mb-1 mt-0" />
             <div class="d-flex justify-content-around">
+              
               <div class="wrapper">
                 <a
                   href="javascript:void(0);"
@@ -74,7 +75,7 @@
                 </a>
               </div>
 
-              <div class="container">
+              <div class="wrapper">
                 <a href="" class="button dark-single" @click="downloadImage()">
                   <div>
                     <svg viewBox="0 0 24 24"></svg>
@@ -89,14 +90,18 @@
                   <span class="like-overlay"></span>
                 </a>
               </div>
+
             </div>
           </b-card-body>
         </b-card>
       </div>
     </div>
+    </div>
   </div>
 </template>
 <script>
+import {gsap, Elastic} from "gsap";
+import axios from "axios";
 import {
   Facebook,
   Twitter,
@@ -112,7 +117,6 @@ import {
   mdbModalBody,
   mdbModalFooter,
 } from "mdbvue";
-import axios from "axios";
 export default {
   data() {
     return {
@@ -129,11 +133,30 @@ export default {
       url: this.currentNode.node.display_url,
     };
   },
+  props: {
+    currentNode: Object,
+    user: Object,
+    next: Function,
+    category: String
+  },
+  name: "Posts",
+  components: {
+    mdbContainer,
+    mdbModal,
+    mdbBtn,
+    mdbModalBody,
+    mdbModalFooter,
+    Facebook,
+    Twitter,
+    Linkedin,
+    Telegram,
+    WhatsApp,
+    Email,
+  },
   mounted() {
     $(".like-button").click(function () {
       $(this).toggleClass("is-active");
     });
-
     document.querySelectorAll(".button").forEach((button) => {
       let duration = 1000,
         svg = button.querySelector("svg"),
@@ -155,30 +178,23 @@ export default {
             },
           }
         );
-
       button.style.setProperty("--duration", duration);
-
       svgPath.y = 20;
       svgPath.smoothing = 0;
-
       button.addEventListener("click", (e) => {
         e.preventDefault();
-
         if (!button.classList.contains("loading")) {
           button.classList.add("loading");
-
           gsap.to(svgPath, {
             smoothing: 0.3,
             duration: (duration * 0.065) / 1000,
           });
-
           gsap.to(svgPath, {
             y: 12,
             duration: (duration * 0.265) / 1000,
             delay: (duration * 0.065) / 1000,
             ease: Elastic.easeOut.config(1.12, 0.4),
           });
-
           setTimeout(() => {
             svg.innerHTML = getPath(0, 0, [
               [3, 14],
@@ -189,7 +205,6 @@ export default {
         }
       });
     });
-
     function getPoint(point, i, a, smoothing) {
       let cp = (current, previous, next, reverse) => {
           let p = previous || current,
@@ -211,7 +226,6 @@ export default {
         cpe = cp(point, a[i - 1], a[i + 1], true);
       return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
     }
-
     function getPath(update, smoothing, pointsNew) {
       let points = pointsNew
           ? pointsNew
@@ -252,35 +266,14 @@ export default {
         var fileUrl = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement("a");
         fileLink.href = fileUrl;
-
         fileLink.setAttribute("download", "image.jpg");
         document.body.appendChild(fileLink);
-
         fileLink.click();
       });
     },
     track() {
-      this.$ga.page("/Indian");
+      this.$ga.page("/@{{category}}");
     },
-  },
-  props: {
-    currentNode: Object,
-    user: Object,
-    next: Function,
-  },
-  name: "Indian",
-  components: {
-    mdbContainer,
-    mdbModal,
-    mdbBtn,
-    mdbModalBody,
-    mdbModalFooter,
-    Facebook,
-    Twitter,
-    Linkedin,
-    Telegram,
-    WhatsApp,
-    Email,
   },
 };
 </script>
@@ -303,6 +296,9 @@ export default {
   width: 100px !important;
   height: 40px !important;
 }
+.dark-bg{
+  background: #242424;
+}
 .card {
   padding: 0 16px 0px;
   border-radius: 20px;
@@ -319,6 +315,9 @@ export default {
 .dark-card #ejs-btn:focus,
 .dark-card #ejs-btn:hover {
   color: white !important;
+}
+.dark-card #card-img{
+filter:brightness(80%);
 }
 .card-body {
   padding: 6px 6px 6px;
@@ -344,7 +343,6 @@ export default {
   font-weight: 700;
   color: black;
 }
-
 @media (max-width: 500px) {
   .card-header {
     padding: 10px 0 5px;
@@ -355,7 +353,6 @@ export default {
   right: 0;
   float: right;
 }
-
 .btn,
 .btn.focus,
 .btn:focus,
@@ -378,21 +375,19 @@ export default {
 .e-btn:focus {
   background: transparent;
 }
-
 #dropdown-1 {
   float: right;
 }
-#Indian {
+#body {
   margin-bottom: 5vh;
 }
-
 /* **************Like Button************** */
 .wrapper .like-button {
   position: relative;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #ccc;
+  background: transparent;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -414,7 +409,8 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #ccc;
+  background: transparent;
+  color: #000;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -424,6 +420,9 @@ export default {
   margin: 0 auto;
   text-decoration: none;
   overflow: hidden;
+}
+.dark-card .wrapper .share-button {
+    color: #fff !important;
 }
 @media (max-width:450px){
   .wrapper .share-button{
@@ -446,6 +445,12 @@ export default {
   transition: all 0.4s;
   z-index: 0;
 }
+@media (max-width:450px){
+ .wrapper .like-button .like-overlay {
+    width: 40px;
+    height: 40px;
+  }
+}
 .wrapper .share-button .share-overlay {
   display: block;
   position: absolute;
@@ -463,9 +468,12 @@ export default {
 }
 .wrapper .like-button i.not-liked {
   display: block;
-  color: #fff;
+  color: #000;
   position: relative;
   z-index: 1;
+}
+.dark-card .wrapper .like-button i.not-liked {
+  color: #fff;
 }
 .wrapper .like-button i.is-liked {
   display: none;
@@ -483,7 +491,6 @@ export default {
 .wrapper .like-button.is-active i.is-liked {
   display: block;
 }
-
 @-webkit-keyframes bouncy {
   from,
   to {
@@ -526,20 +533,18 @@ export default {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-
 /* **********************Download Button**************** */
 .button.dark-single {
   --background: none;
-  --rectangle: #cccccc;
+  --rectangle: transparent;
   --success: #4bc793;
 }
-
 .button {
   --background: #275efe;
   --rectangle: #184fee;
   --success: #4672f1;
   --text: rgb(0, 0, 0);
-  --arrow: #fff;
+  --arrow: #000;
   --checkmark: #fff;
   --shadow: rgba(10, 22, 50, 0.24);
   display: -webkit-box;
@@ -555,6 +560,9 @@ export default {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   transition: transform 0.2s ease, box-shadow 0.2s ease,
     -webkit-transform 0.2s ease;
+}
+.dark-card .button{
+  --arrow: #fff;
 }
 .button:active {
   -webkit-transform: scale(0.95);
@@ -581,11 +589,11 @@ export default {
 }
 .button > div:before {
   border-radius: 1px;
-  width: 2px;
+  width: 3px;
   top: 50%;
   left: 50%;
   height: 17px;
-  margin: -9px 0 0 -1px;
+  margin: -9px 0 0 -1.5px;
   background: var(--arrow);
 }
 .button > div:after {
@@ -607,15 +615,14 @@ export default {
   height: 20px;
   left: 50%;
   top: 50%;
-  margin: -9px 0 0 -10px;
+  margin: -8px 0 0 -10px;
   fill: none;
   z-index: 1;
-  stroke-width: 2px;
+  stroke-width: 3px;
   stroke: var(--arrow);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
 .button.loading > div:before {
   -webkit-animation: line calc(var(--duration) * 1ms) linear forwards
     calc(var(--duration) * 0.065ms);
@@ -634,7 +641,6 @@ export default {
   animation: svg calc(var(--duration) * 1ms) linear forwards
     calc(var(--duration) * 0.065ms);
 }
-
 @-webkit-keyframes text {
   10%,
   85% {
@@ -647,7 +653,6 @@ export default {
     transform: translateY(-200%);
   }
 }
-
 @keyframes text {
   10%,
   85% {
@@ -708,14 +713,14 @@ export default {
   }
   21%,
   89% {
-    stroke-dasharray: 20px;
+    stroke-dasharray: 26px;
     stroke-dashoffset: 26px;
     stroke-width: 3px;
     margin: -10px 0 0 -10px;
     stroke: var(--checkmark);
   }
   100% {
-    stroke-dasharray: 100px;
+    stroke-dasharray: 26px;
     stroke-dashoffset: 0;
     margin: -10px 0 0 -10px;
     stroke: var(--checkmark);
@@ -817,16 +822,5 @@ export default {
     -webkit-transform: scaleY(1);
     transform: scaleY(1);
   }
-}
-.container {
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  justify-content: center;
-}
-.container > div {
-  flex-basis: 100%;
-  width: 0;
 }
 </style>

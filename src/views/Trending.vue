@@ -2,12 +2,12 @@
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">
-        <TrendingPosts
+        <Posts
           :key="index"
           :currentNode="api_details[index]"
           :user="user"
           :next="next"
-          
+          :category="category"
         />
       </div>
     </section>
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from "vuex";
-import TrendingPosts from "../components/TrendingPosts.vue";
+import Posts from "../components/Posts.vue";
 export default {
  
   data() {
@@ -34,6 +34,7 @@ export default {
       currentNode: {},
       user: {},
       index: 0,
+      category: "Trending",
       accounts: ["yug_chandak","instagram"],
     };
   },
@@ -46,7 +47,7 @@ export default {
     }
   },
   components: {
-    TrendingPosts,
+    Posts,
   },
   methods: {
     next() {

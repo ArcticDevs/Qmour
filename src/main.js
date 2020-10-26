@@ -4,7 +4,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 // import VueAnalytics from 'vue-analytics'
+import VueGtag from "vue-gtag";
 
+Vue.use(VueGtag, {
+  config: { id: "UA-179395921-1" },
+  params: {
+    send_page_view: true
+  }
+});
 
 import Vuex from 'vuex'
 Vue.use(Vuex)
