@@ -1,6 +1,4 @@
 <template>
- <!-- accounts: ["the.offensive.indian","offended_dishwasher","edgymemesforworthlessteens","pewmemes","morty_explains","introverted.souls","sourlemon1","saxes"], -->
-
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">

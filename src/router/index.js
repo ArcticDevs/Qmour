@@ -9,6 +9,11 @@ const routes = [
      path: '*', redirect: '/indian-memes' 
   },
   {
+    path: '/privacy-policy',
+    name: 'Privacy',
+    component: () => import(/*webpackChunkName: "trending"*/ "../views/privacy_policy.vue")
+  },
+  {
     path: '/indian-memes',
     name: 'Indian',
     component: () => import(/*webpackChunkName: "trending"*/ "../views/Indian.vue")

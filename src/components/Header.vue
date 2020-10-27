@@ -1,97 +1,91 @@
 <template>
-  <div id="header" >
+  <div id="header">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
     <go-top id="goto-top" :has-outline="false" visibleoffset="10"></go-top>
+
     <div class="flex">
+
       <div class="mode-toggle" @click="modeToggle" :class="darkDark">
         <div class="toggle">
           <div id="dark-mode" type="checkbox"></div>
         </div>
       </div>
 
-      <div class="heading" style="padding-top: 2vh">
+      <div>
         <h1>Qmour</h1>
       </div>
+
+      <div>
+        <dropdown-menu class="custom-style zoom" direction="right" :withDropdownCloser="true">
+          <button slot="trigger"><i class="fas fa-cog"></i></button>
+          <ul slot="body">
+            <li>
+              <router-link to="/privacy-policy" dropdown-closer>Privacy Policy</router-link>
+            </li>
+          </ul>
+        </dropdown-menu>
+      </div>
+
     </div>
+
+
+      <!-- ------------NAVBAR------------ -->
     <div id="nav">
       <carousel class="carousel" :nav="false" :dots="false" :margin="-80">
         <router-link to="/indian-memes">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-          @click="indianmeme"
-          >         
+          <button class="btn mb-2 shadow-none navlink" @click="indianmeme">
             Indian &#x1F1EE;&#x1F1F3;
           </button>
         </router-link>
         <router-link to="/dark-memes">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-            @click="darkmeme"
-          >Dark &#128420;
+          <button class="btn mb-2 shadow-none navlink" @click="darkmeme">
+            Dark &#128420;
           </button>
         </router-link>
         <router-link to="/funny-memes">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="funnymeme"
-          >
-          Funny &#128514;
+          <button class="btn mb-2 shadow-none navlink" @click="funnymeme">
+            Funny &#128514;
           </button>
         </router-link>
         <router-link to="/science-memes">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-          @click="sciencememe"
-          >Science ⚕️
+          <button class="btn mb-2 shadow-none navlink" @click="sciencememe">
+            Science ⚕️
           </button>
         </router-link>
 
-         <router-link to="/sarcasm">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="sarcasm"
-          >
-          Sarcasm 🙃
+        <router-link to="/sarcasm">
+          <button class="btn mb-2 shadow-none navlink" @click="sarcasm">
+            Sarcasm 🙃
           </button>
         </router-link>
 
         <router-link to="/hindi">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="hindi"
-          >
-          Hindi ♨️
+          <button class="btn mb-2 shadow-none navlink" @click="hindi">
+            Hindi ♨️
           </button>
         </router-link>
 
         <router-link to="/coding">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="coding"
-          >
-          Coding 💻
+          <button class="btn mb-2 shadow-none navlink" @click="coding">
+            Coding 💻
           </button>
         </router-link>
-
 
         <router-link to="/quotes">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="quotes"
-          >
-          Quotes ✌️
+          <button class="btn mb-2 shadow-none navlink" @click="quotes">
+            Quotes ✌️
           </button>
         </router-link>
 
-        
         <router-link to="/fact">
-          <button 
-          class="btn mb-2 shadow-none navlink"
-           @click="fact"
-          >
-          Fact 👍🏻
+          <button class="btn mb-2 shadow-none navlink" @click="fact">
+            Fact 👍🏻
           </button>
         </router-link>
-
       </carousel>
     </div>
     <router-view />
@@ -101,24 +95,22 @@
 <script>
 import carousel from "vue-owl-carousel";
 import GoTop from "@inotom/vue-go-top";
-import { DropDownButtonPlugin } from '@syncfusion/ej2-vue-splitbuttons';
+import DropdownMenu from "v-dropdown-menu";
+import "v-dropdown-menu/dist/v-dropdown-menu.css";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
   components: {
     carousel,
     GoTop,
+    DropdownMenu,
+    FontAwesomeIcon,
   },
-  // name:"darkmeme",
   data() {
     return {
       darkMode: false,
-      items: [
-        {
-          text: "Upload",
-        },
-      ],
+      transition:String,
     };
   },
-  // name:'indianmeme',
   methods: {
     dark() {
       document.querySelector("#app").classList.add("dark-mode");
@@ -140,97 +132,96 @@ export default {
         this.dark();
       }
     },
-    indianmeme(){
-           this.$gtag.pageview({
-    page_path: '/Indian-Meme',
-  })
-      this.$gtag.event('indian-meme-click', {
-        'event_category': 'indian-meme',
-        'event_label': 'indian-click',
-        
-        'value': 1
-      })
-    },
-    darkmeme(){
-        this.$gtag.pageview({
-    page_path: '/Dark-Meme',
-  })
-      this.$gtag.event('darkmeme-click', {
-        'event_category': 'darkmeme',
-        'event_label': 'darkmeme-click',
-      
-        'value': 1
-      })
-    },
-  sciencememe(){
-  this.$gtag.pageview({
-    page_path: '/Science-Meme',
-  })
-    this.$gtag.event('sciencememe-click', {
-        'event_category': 'sciencememe',
-        
-        'event_label': 'sciencememe-click',
-        'value': 1
-      })
-  },
-  funnymeme(){
-         this.$gtag.pageview({page_path: '/Funny-Meme',
-  })
-    this.$gtag.event('funnymeme-click', {
-        'event_category': 'funnymeme',
-        'event_label': 'funnymeme-click',
-       
-        'value': 1
-      })
-  },
+    indianmeme() {
+      this.$gtag.pageview({
+        page_path: "/Indian-Meme",
+      });
+      this.$gtag.event("indian-meme-click", {
+        event_category: "indian-meme",
+        event_label: "indian-click",
 
-    sarcasm(){
-           this.$gtag.pageview({page_path: '/sarcasm',})
-      this.$gtag.event('Sarcasm-click', {
-        'event_category': 'Sarcasm',
-        'event_label': 'Sarcasm-click',        
-        'value': 1
-      })
+        value: 1,
+      });
+    },
+    darkmeme() {
+      this.$gtag.pageview({
+        page_path: "/Dark-Meme",
+      });
+      this.$gtag.event("darkmeme-click", {
+        event_category: "darkmeme",
+        event_label: "darkmeme-click",
+
+        value: 1,
+      });
+    },
+    sciencememe() {
+      this.$gtag.pageview({
+        page_path: "/Science-Meme",
+      });
+      this.$gtag.event("sciencememe-click", {
+        event_category: "sciencememe",
+
+        event_label: "sciencememe-click",
+        value: 1,
+      });
+    },
+    funnymeme() {
+      this.$gtag.pageview({ page_path: "/Funny-Meme" });
+      this.$gtag.event("funnymeme-click", {
+        event_category: "funnymeme",
+        event_label: "funnymeme-click",
+
+        value: 1,
+      });
     },
 
-     hindi(){
-           this.$gtag.pageview({page_path: '/hindi',})
-      this.$gtag.event('hindi-click', {
-        'event_category': 'hindi',
-        'event_label': 'hindi-click',        
-        'value': 1
-      })
+    sarcasm() {
+      this.$gtag.pageview({ page_path: "/sarcasm" });
+      this.$gtag.event("Sarcasm-click", {
+        event_category: "Sarcasm",
+        event_label: "Sarcasm-click",
+        value: 1,
+      });
     },
-     coding(){
-           this.$gtag.pageview({page_path: '/coding',})
-      this.$gtag.event('coding-click', {
-        'event_category': 'coding',
-        'event_label': 'coding-click',        
-        'value': 1
-      })
+
+    hindi() {
+      this.$gtag.pageview({ page_path: "/hindi" });
+      this.$gtag.event("hindi-click", {
+        event_category: "hindi",
+        event_label: "hindi-click",
+        value: 1,
+      });
     },
-      quotes(){
-           this.$gtag.pageview({page_path: '/quotes',})
-      this.$gtag.event('quotes-click', {
-        'event_category': 'quotes',
-        'event_label': 'quotes-click',        
-        'value': 1
-      })
+    coding() {
+      this.$gtag.pageview({ page_path: "/coding" });
+      this.$gtag.event("coding-click", {
+        event_category: "coding",
+        event_label: "coding-click",
+        value: 1,
+      });
     },
-    fact(){
-           this.$gtag.pageview({page_path: '/fact',})
-      this.$gtag.event('fact-click', {
-        'event_category': 'fact',
-        'event_label': 'fact-click',        
-        'value': 1
-      })
+    quotes() {
+      this.$gtag.pageview({ page_path: "/quotes" });
+      this.$gtag.event("quotes-click", {
+        event_category: "quotes",
+        event_label: "quotes-click",
+        value: 1,
+      });
     },
-},
+    fact() {
+      this.$gtag.pageview({ page_path: "/fact" });
+      this.$gtag.event("fact-click", {
+        event_category: "fact",
+        event_label: "fact-click",
+        value: 1,
+      });
+    },
+  },
   computed: {
     darkDark() {
       return this.darkMode && "darkmode-toggled";
     },
-  }
+  },
 };
 </script>
 
@@ -245,42 +236,35 @@ export default {
   /* color: #000 !important; */
 }
 #nav .carousel button {
-  background-color: #83DEC4 !important;
+  background-color: #83dec4 !important;
   border-radius: 9px;
   font-family: "Red Hat Display";
   font-style: normal;
   font-weight: 700;
-  color:#000 !important;
+  color: #000 !important;
 }
 #nav .carousel a.router-link-exact-active button {
-  background-color: #00B589 !important;
+  background-color: #00b589 !important;
 }
-/* @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-.e-menu::before {
-  content: "\e984";
-} */
 </style>
 
 <style scoped>
-#goto-top{
-  background-color: #83DEC4 !important;
+#goto-top {
+  background-color: #83dec4 !important;
 }
-.dark{
-      color:white;
+.dark {
+  color: white;
   background: rgba(45, 45, 45, 0.94);
 }
 h1 {
   font: 900 40px/1 "Red Hat Display", Arial, sans-serif;
-  text-align: center;
 }
+
 .btn,
-.btn:focus{
-    outline:none !important;
-    box-shadow: 1px 5px 7px -3px !important;
-      background-color: #00B589 !important;
+.btn:focus {
+  outline: none !important;
+  box-shadow: 1px 5px 7px -3px !important;
+  background-color: #00b589 !important;
 }
 .e-btn,
 .e-btn:hover,
@@ -294,13 +278,14 @@ h1 {
   position: relative;
   display: inline-block;
 }
-.heading h1 a {
-  text-decoration: none;
+
+.heading h1 {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
 }
-.header-settings {
-  display: inline-block;
-  cursor: pointer;
-}
+
 @media (min-width: 492px) {
   #nav button {
     margin-right: 25px;
@@ -339,7 +324,6 @@ $dark: #171717;
 $mode-toggle-bg: #5f5d5d;
 // _base.scss
 #app {
-  
   color: $dark;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -423,11 +407,69 @@ $mode-toggle-bg: #5f5d5d;
 }
 .flex {
   display: flex;
-  padding-top: 10px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
+}
+
+@media (min-width: 800px) {
+  .flex {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+// *********************SETTINGS DROPDOWN***************** //
+.v-dropdown-menu {
+  $this: &;
+  &.custom-style & {
+    &__container {
+      #{$this} {
+        &__body {
+          ul {
+            margin: 0;
+            padding: 0;
+            li {
+              list-style: none;
+              a {
+                display: flex;
+                justify-content: center;
+                padding: 0.5rem;
+                color: #666;
+                font-size: 16px;
+                text-decoration: none;
+                &:hover {
+                  background-color: #f2f2f2;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+   &.custom-style {
+    // Custom Transition - Zoom Effect
+    .zoom-enter-active {
+      transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    .zoom-enter,
+    .zoom-leave-to {
+      transform: translateY(50px) scale(0.5);
+      transform-origin: center top;
+      opacity: 0;
+    }
+    &#{$this}--mode-hover {
+      .zoom-enter,
+      .zoom-leave-to {
+        transition-delay: 0.4s;
+      }
+    }
+  }
 }
 </style>

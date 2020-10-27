@@ -1,5 +1,4 @@
 <template>
-
   <div v-if="api_details">
     <section v-for="(node,index) in pageOffset" :key="index">
       <div v-if="api_details[index]">

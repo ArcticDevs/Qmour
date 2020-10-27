@@ -31,16 +31,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEllipsisV, faHeart, faShare, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import VueDarkMode from "@growthbunker/vuedarkmode";
 
-library.add(faEllipsisV, faHeart, faShare, faDownload)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
@@ -51,7 +49,10 @@ Vue.use(DropDownButtonPlugin)
 
 Vue.config.productionTip = false
 
+import DropdownMenu from 'v-dropdown-menu'
+import 'v-dropdown-menu/dist/v-dropdown-menu.css' // Base style, required.
 
+Vue.use(DropdownMenu)  
 
 Vue.use(VueDarkMode, {
   // Specify the theme to use: dark or light (dark by default).
